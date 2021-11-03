@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Student Register</title>
+    </head>
+    <body>
+        <h1>Student Registration</h1>
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter Name">
+            <input type="number" name="enrollNo" placeholder="Enter Enrollment No">
+            <input type="text" name="email" placeholder="Enter Email Address">
+            <input type="number" name="phoneNo" placeholder="Enter Phone No">
+            <input type="text" name="username" placeholder ="Enter Username">
+            <input type="password" name="password" placeholder="Enter Password">
+            <input type="password" name="password2" placeholder="Re-enter Password">
+            <input type="submit" value="Send Request">
+        </form>
+        <a href="{% url 'stu_login' %}">Back to Student Login Page</a>
+
+    </body>
+</html>

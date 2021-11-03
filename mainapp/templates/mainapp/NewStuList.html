@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>New Student List</title>
+    </head>
+    <body>
+        <h1>List of Register Requests</h1>
+        <ul>
+            {% for s in list %}
+                <li><a href="{% url 'add2' lib=l.username stuId=s.id %}">{{s}}</a> </li>
+            {% empty %}
+                <li>No Requests</li>
+            {% endfor %}
+        </ul>
+        <div>
+            <a href="{% url 'lib_home' l.username %} "><button>Back to Home</button></a>
+        </div>
+    </body>
+</html>

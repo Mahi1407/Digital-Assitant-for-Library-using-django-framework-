@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add Students</title>
+    </head>
+    <body>
+        <form action="{% url 'add' l.username %}" method = "post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter Name">
+            <input type="number" name="enrollNo" placeholder="Enter Enrollment No">
+            <input type="text" name="email" placeholder="Enter Email Address">
+            <input type="number" name="phoneNo" placeholder="Enter Phone No">
+            <input type="text" name="username" placeholder ="Enter Username">
+            <input type="password" name="password" placeholder="Enter Password">
+            <input type="password" name="password2" placeholder="Re-enter Password">
+            <input type="submit" value="Add Student">
+        </form>
+        <div>
+            <a href="{% url 'lib_home' l.username %}">Home</a>
+        </div>
+    </body>
+</html>

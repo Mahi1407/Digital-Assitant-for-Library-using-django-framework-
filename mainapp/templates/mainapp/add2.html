@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Add2</title>
+    </head>
+    <body>
+        <form method="post" action="{% url 'add2' lib=l.username stuId=s.id %}">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter Name" value={{s.name}}>
+            <input type="number" name="enrollNo" placeholder="Enter Enrollment No" value={{s.enrollmentNumber}} >
+            <input type="text" name="email" placeholder="Enter Email Address" value={{s.emailId}} >
+            <input type="number" name="phoneNo" placeholder="Enter Phone No" value={{s.mobileNumber}} >
+            <input type="text" name="username" placeholder ="Enter Username" value={{s.username}} >
+            <input type="password" name="password" placeholder="Enter Password" value={{s.password}} >
+            <input type="submit" value="Add Student">
+        </form>
+        <div>
+            <a href="{% url 'requestList' l.username %}">Back to Student Request List</a>
+        </div>
+    </body>
+</html>
