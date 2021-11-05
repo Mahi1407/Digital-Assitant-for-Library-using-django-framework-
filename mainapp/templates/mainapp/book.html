@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+</head>
+<body>
+    <div>
+        <form method="post" action="{% url 'book' stu %}">
+            {% csrf_token %}
+            <input name="book" list="books" placeholder="Enter the Book name">
+            <datalist id="books">
+                {% for b in booklist %}
+                    <option value="{{b.bookName}}">
+                {% endfor %}
+            </datalist>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <h2>{{b.bookName}}</h2>
+    <ul>
+        <li>Authors: {% for au in authors %}{{au}}   ,{% endfor %}</li>
+        <li>Publisher: {{b.publication}}</li>
+        <li>Edition: {{b.edition}}</li>
+        <li>Total Number of Copies: {{c}}</li>
+        <li>Number of Copies available: {{a}}</li>
+        <li>Number of Copies Reserver: {{r}}</li>
+    </ul>
+    {% if a != 0 %}
+    <div><a href=""><button>Add Book to Booklist</button></a></div>
+    {% endif %} 
+    {% if r != 0 %} 
+    <div><a href=""><button>Reserve this Book</button></a></div>
+    {% endif %}
+    
+</body>
+</html>
