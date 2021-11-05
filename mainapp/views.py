@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from .models import *
+import datetime
 
 def index(request):
     return render(request, "mainapp/index.html")
@@ -146,6 +147,32 @@ def book(request, stu):
             "r": r,
             "booklist": booklist
         })
+
+def book2(request, stu, b):
+    s = student.objects.get(username = stu)
+    bk = Book.objects.get(id = b)
+    bcopies = bk.Copies_of_book.all()
+    bId = 0
+    for book in bcopies:
+        if book.BookAvalibilityStatus:
+            bId = book.id
+            break
+    bookcopy = BookDataBase.objects.get(id=bId)
+    bookcopy.Student = s
+    bookcopy.BookAvalibilityStatus = False
+    bookcopy.BookIssuedate = datetime.datetime.now()
+    bookcopy.BookDuedate = bookcopy.BookIssuedate + datetime.timedelta(days=30)
+    bookcopy.save()
+    return HttpResponseRedirect(reverse('stu_search', kwargs={'stu': s.username}))
+
+def stu_books(request, stu):
+    Takenbooklist = student.objects.get(name=stu).Taken_Books.all()
+    Reserverdlist = student.objects.get(name=stu).Reserverd_Books.all()
+    return render(request, "mainapp/stu_books.html",{
+        "tbl": Takenbooklist,
+        "rbl": Reserverdlist,
+        "stu":stu
+    })
         
 
 

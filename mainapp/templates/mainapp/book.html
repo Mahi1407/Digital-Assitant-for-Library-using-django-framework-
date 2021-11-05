@@ -29,11 +29,17 @@
         <li>Number of Copies Reserver: {{r}}</li>
     </ul>
     {% if a != 0 %}
-    <div><a href=""><button>Add Book to Booklist</button></a></div>
+    <div><a href="{% url 'book2' stu=stu b=b.id %}"><button>Add Book to Booklist</button></a></div>
     {% endif %} 
     {% if r != 0 %} 
     <div><a href=""><button>Reserve this Book</button></a></div>
     {% endif %}
+    <div>
+        <a href="{% url 'stu_home' stu=stu %}"><button>Back to Home</button></a>
+    </div>
     
 </body>
 </html>
+
+
+

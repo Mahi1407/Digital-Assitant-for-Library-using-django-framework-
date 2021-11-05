@@ -15,5 +15,7 @@ urlpatterns = [
     path('librarian/<str:lib>/requestList', views.requestList, name="requestList"),
     path('librarain/<str:lib>/requestList/<int:stuId>', views.add2, name="add2"), 
     path('student/<str:stu>/search', views.stu_search, name="stu_search"),
-    path('student/<str:stu>/book', views.book, name="book")
+    path('student/<str:stu>/book', views.book, name="book"),
+    path('student/<str:stu>/book/<int:b>', views.book2, name="book2"),
+    path('student/<str:stu>/BookList', views.stu_books, name = "stu_books"),
 ]

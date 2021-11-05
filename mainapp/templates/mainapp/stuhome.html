@@ -9,7 +9,7 @@
             <a href=""><button>View Profile</button></a>
         </div>
         <div>
-            <a href=""><button>View Taken Books</button></a>
+            <a href="{% url 'stu_books' s.username %}"><button>View Taken Books</button></a>
         </div>
         <div>
             <a href="{% url 'stu_search' s.username %}"><button>Search/Add a book</button></a>
