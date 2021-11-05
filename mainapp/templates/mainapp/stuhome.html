@@ -6,7 +6,22 @@
     <body>
         <h1>Welcome, {{s.name}}</h1>
         <div>
-            <a href="{% url 'index'  %}">Log Out</a>
+            <a href=""><button>View Profile</button></a>
+        </div>
+        <div>
+            <a href=""><button>View Taken Books</button></a>
+        </div>
+        <div>
+            <a href="{% url 'stu_search' s.username %}"><button>Search/Add a book</button></a>
+        </div>
+        <div>
+            <a href=""><button>View Total Fine</button></a>
+        </div>
+        <div>
+            <a href=""><button>Request for Extension</button></a>
+        </div>
+        <div>
+            <a href="{% url 'index'  %}"><button>Log Out</button></a>
         </div>
     </body>
 </html>

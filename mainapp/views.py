@@ -116,6 +116,38 @@ def add2(request, lib, stuId):
             "s": s
         })
 
+def stu_search(request, stu):
+    booklist = Book.objects.all()
+    return render(request, "mainapp/stu_search.html", {
+        "booklist": booklist,
+        "stu": stu
+    })
+
+def book(request, stu):
+    if request.method == 'POST':
+        b = Book.objects.get(bookName=request.POST["book"])
+        authors = b.Authors.all()
+        c = b.Copies_of_book.count()
+        bcopies = b.Copies_of_book.all()
+        a=0
+        r = 0
+        booklist = Book.objects.all()
+        for bc in bcopies:
+            if bc.BookAvalibilityStatus:
+                a = a+1
+            if bc.BookReserverdStatus:
+                r = r+1
+        return render(request, "mainapp/book.html",{
+            "b":b,
+            "stu": stu,
+            "c": c,
+            "authors": authors,
+            "a": a, 
+            "r": r,
+            "booklist": booklist
+        })
+        
+
 
 
 
