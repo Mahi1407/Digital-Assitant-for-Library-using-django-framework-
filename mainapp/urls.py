@@ -24,5 +24,8 @@ urlpatterns = [
     path('student/<str:stu>/TotalFine', views.stu_fine, name="stu_fine"),
     path('student/<str:stu>/extension', views.extension, name="extension"),
     path('student/<str:stu>/extend/<int:bId>', views.extend, name="extend"),
+    path('librarian/<str:lib>/create_book', views.create_book, name="create_book"),
+    path('librarian/<str:lib>/<int:bId>/add_authors', views.addauthor_to_book, name="addauthor_to_book"),
+    path('librarian/<str:lib>/lib_return', views.lib_return, name="lib_return"),
     
 ]

@@ -11,18 +11,12 @@
     <div>{{msg}}</div>
     {% endif %} 
     <h1>Add a New Book Object</h1>
-    <form action="" method="post">
+    <form action="{% url 'create_book' lib %}" method="post">
         {% csrf_token %}
-        <input name="author" list="authors" placeholder="Author name">
-        <datalist id="authors">
-            {% for a in al %}
-                <option value="{{a.name}}">
-            {% endfor %}
-        </datalist>
         <div>Book Name: <input type="text" name="bookname"></div>
         <div>Publisher: <input type="text" name="publication"></div>
         <div>Edition: <input type="text" name="edition"></div>
-        <input type="submit" value="Add Book">
+        <input type="submit" value="Create book and proceed to add authors">
     </form>
     <div><a href="{% url 'add_author' lib %}"><button>Add a New Author</button></a></div>
     <div><a href="{% url 'add_bookcopy' lib %}"><button>Back to add Book copy page</button></a></div>

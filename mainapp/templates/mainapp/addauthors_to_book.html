@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add authors</title>
+</head>
+<body>
+    <h1>{{b.bookName}}</h1>
+    <ul>
+        <li>Publisher: {{b.publication}}</li>
+        <li>Edition: {{b.edition}}</li>
+    </ul>
+    <h2>Authors</h2>
+    <ul>
+        {% for a in authors %}
+            <li>{{a}}</li>
+        {% endfor %} 
+    </ul>
+    <h2>Add Author</h2>
+    <form action="{% url 'addauthor_to_book' lib=lib bId=b.id %}" method="post">
+        {% csrf_token %} 
+        <input name="author" list="non_authors" placeholder="Enter Author name">
+        <datalist id="non_authors">
+            {% for na in non_authors %} 
+            <option value="{{na}}"></option>
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Add">
+    </form>
+    <div><a href="{% url 'add_bookcopy' lib %}"><button>Back to add Book copy page</button></a></div>
+    <div><a href="{% url 'add_newbook' lib %}"><button>Back to add Book </button></a></div>
+</body>
+</html>

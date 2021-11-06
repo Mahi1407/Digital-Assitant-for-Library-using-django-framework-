@@ -63,8 +63,8 @@ class BookDataBase(models.Model):
     BookReserverdStatus = models.BooleanField(default=False)
     BookIssuedate = models.DateTimeField(null=True)
     BookDuedate = models.DateTimeField(null=True)
-    Student = models.ForeignKey(student, on_delete=models.CASCADE, related_name="Taken_Books", null=True, blank=True)
-    Reserved_Stu = models.ForeignKey(student, on_delete=models.CASCADE, related_name="Reserverd_Books", null=True, blank=True)
+    Student = models.ForeignKey(student, on_delete=models.SET_NULL, related_name="Taken_Books", null=True, blank=True)
+    Reserved_Stu = models.ForeignKey(student, on_delete=models.SET_NULL, related_name="Reserverd_Books", null=True, blank=True)
 
     def __str__(self):
         return f"({self.BookIsbnNumber}){self.Book.bookName}, {self.Book.Authors.all()}"

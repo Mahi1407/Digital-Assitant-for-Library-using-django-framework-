@@ -7,10 +7,17 @@
     <title>Add Author</title>
 </head>
 <body>
-    <form action="" method="post">
+    {% if msg %}
+    <div>{{msg}}</div>
+    {% endif %} 
+    <h1>Add a New Author</h1>
+    <form action="{% url 'add_author' lib %}" method="post">
+        {% csrf_token %}
         <div>Author Name: <input type="text" autofocus name="author"></div>
         <div>Educational Details: <input type="text" name="edudetails"></div>
-        <div><input type="submit" value="Add Author"</div>
+        <div><input type="submit" value="Add Author"></div>
     </form>
+    <div><a href="{% url 'add_newbook' lib %}">Back to Add Book Page</a></div>
+    <div><a href="{% url 'lib_home' lib %}">Back to Home</a></div>
 </body>
 </html>

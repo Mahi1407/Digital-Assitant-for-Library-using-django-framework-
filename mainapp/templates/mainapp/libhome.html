@@ -21,7 +21,7 @@
             <a href="{% url 'add_bookcopy' l.username %}"><button>Add a new Book copy</button></a>
         </div>
         <div>
-            <a href=""><button>Verify returned Book</button></a>
+            <a href="{% url 'lib_return' l.username %}"><button>Verify returned Book</button></a>
         </div>
         <div>
             <a href=""><button>Remove Student</button></a>

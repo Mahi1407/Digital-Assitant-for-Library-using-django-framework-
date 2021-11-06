@@ -224,6 +224,17 @@ def add_bookcopy(request, lib):
     })
 
 def add_author(request, lib):
+    if request.method=="POST":
+        name = request.POST["author"]
+        Edu = request.POST["edudetails"]
+        a = Author(name=name, Education=Edu)
+        a.save()
+        msg = name+" got successfully added to Authors List"
+        return render(request, "mainapp/add_author.html", {
+            "lib":lib,
+            "msg": msg
+        })
+
     return render(request, "mainapp/add_author.html", {
         "lib":lib
     })
@@ -235,6 +246,36 @@ def add_newbook(request, lib):
         "al": al
     })
 
+def create_book(request, lib):
+    if request.method == "POST":
+        bookname = request.POST["bookname"]
+        publication = request.POST["publication"]
+        edition = request.POST["edition"] 
+        b = Book(bookName=bookname, publication=publication, edition=edition)
+        b.save()
+        return render(request, "mainapp/addauthors_to_book.html", {
+            "lib":lib,
+            "b": b,
+            "authors": b.Authors.all(),
+            "non_authors": Author.objects.exclude(Written_Books=b).all()
+        })
+
+def addauthor_to_book(request, lib, bId):
+    if request.method == "POST":
+        a = Author.objects.get(name=request.POST["author"]) 
+        b = Book.objects.get(id=bId)
+        b.Authors.add(a)
+        return render(request, "mainapp/addauthors_to_book.html", {
+            "lib":lib,
+            "b":b,
+            "authors": b.Authors.all(),
+            "non_authors": Author.objects.exclude(Written_Books=b).all()
+        })
+
+def lib_return(request, lib):
+    return render(request, "mainapp/returnBook.html", {
+        'lib':lib
+    })
 
         
 
