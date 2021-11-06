@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request for Extension</title>
+    <style>
+        body
+        {
+            counter-reset: Serial;           
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+            counter-increment: Serial;      /* Increment the Serial counter */
+            content:  counter(Serial); /* Display the counter */
+        }
+    </style>
+</head>
+<body>
+    {% if msg %} 
+    <div>
+        {{msg}}
+    </div>
+    {% endif %}
+    <table border="1">
+        <tr>
+            <th>SNo.</th>
+            <th>Book ISBN Number</th>
+            <th>Book name</th>
+            <th>Due Date</th>
+            <th>Reserved Status</th>
+            <th>Option for Extension</th>
+        </tr>
+        {% for t in tbl %} 
+        <tr>
+            <td></td>
+            <td>{{t.BookIsbnNumber}}</td>
+            <td>{{t.Book.bookName}}</td>
+            <td>{{t.BookDuedate.date}}</td>
+            <td>{{t.BookReserverdStatus}}</td>
+            <td><a href="{% url 'extend' stu=stu bId=t.id %}"><button>Extend Duedate</button></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        Clicking the "Extend Duedate" button extends the duedate by 10 more days
+    </div>
+    <div>
+        <a href="{% url 'stu_home' stu %}"><button>Back to Home</button></a>
+    </div>
+</body>
+</html>

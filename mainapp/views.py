@@ -173,6 +173,39 @@ def stu_books(request, stu):
         "rbl": Reserverdlist,
         "stu":stu
     })
+
+def stu_fine(request, stu):
+    Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    now = datetime.datetime.now()
+    return render(request, "mainapp/stu_fine.html", {
+        "tbl": Takenbooklist,
+        "stu":stu,
+        "now": now
+    })
+
+def extension(request, stu):
+    Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    return render(request, "mainapp/extension.html", {
+        "stu":stu,
+        "tbl": Takenbooklist
+    })
+
+def extend(request, stu, bId):
+    book = BookDataBase.objects.get(id=bId)
+    Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    if book.BookReserverdStatus:
+        return   
+    else:
+        book.BookDuedate = book.BookDuedate + datetime.timedelta(days=10)
+        book.save()
+        msg = "Sucessfully Extended"
+        return render(request, "mainapp/extension.html", {
+        "stu":stu,
+        "tbl": Takenbooklist,
+        "msg": msg
+    })
+
+
         
 
 

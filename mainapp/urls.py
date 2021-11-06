@@ -18,4 +18,7 @@ urlpatterns = [
     path('student/<str:stu>/book', views.book, name="book"),
     path('student/<str:stu>/book/<int:b>', views.book2, name="book2"),
     path('student/<str:stu>/BookList', views.stu_books, name = "stu_books"),
+    path('student/<str:stu>/TotalFine', views.stu_fine, name="stu_fine"),
+    path('student/<str:stu>/extension', views.extension, name="extension"),
+    path('student/<str:stu>/extend/<int:bId>', views.extend, name="extend")
 ]

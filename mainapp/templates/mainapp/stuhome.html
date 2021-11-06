@@ -15,10 +15,10 @@
             <a href="{% url 'stu_search' s.username %}"><button>Search/Add a book</button></a>
         </div>
         <div>
-            <a href=""><button>View Total Fine</button></a>
+            <a href="{% url 'stu_fine' s.username %}"><button>View Total Fine</button></a>
         </div>
         <div>
-            <a href=""><button>Request for Extension</button></a>
+            <a href="{% url 'extension' stu=s.username  %}"><button>Request for Extension</button></a>
         </div>
         <div>
             <a href="{% url 'index'  %}"><button>Log Out</button></a>

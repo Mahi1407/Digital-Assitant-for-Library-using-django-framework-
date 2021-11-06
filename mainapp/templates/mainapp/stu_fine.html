@@ -1,0 +1,56 @@
+{% load fine_functions %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Fine</title>
+    <style>
+        body
+        {
+            counter-reset: Serial;           
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+            counter-increment: Serial;      /* Increment the Serial counter */
+            content:  counter(Serial); /* Display the counter */
+        }
+    </style>
+</head>
+<body>
+    <h1>Table of Fines for the taken books: </h1>
+    <table border="1">
+        <tr>
+            <th>SNo.</th>
+            <th>Book ISBN Number</th>
+            <th>Book name</th>
+            <th>Due Date</th>
+            <th>Overdue days</th>
+            <th>Fine</th>
+        </tr>
+        {% for t in tbl %} 
+        <tr>
+            <td></td>
+            <td>{{t.BookIsbnNumber}}</td>
+            <td>{{t.Book.bookName}}</td>
+            <td>{{t.BookDuedate.date}}</td>
+            {%  Overduedays a=t.BookDuedate.date.year b=t.BookDuedate.month c=t.BookDuedate.date.day as dt %}
+            <td>{{dt}}</td>
+            {%  fine a=t.BookDuedate.date.year b=t.BookDuedate.month c=t.BookDuedate.date.day as fn %}
+            <td>&#2352 {{fn}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        Total Fine: 
+    </div>
+    <a href="{% url 'stu_home' stu %}"><button>Back to Home</button></a>
+</body>
+</html>
