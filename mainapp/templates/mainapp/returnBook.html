@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book</title>
+</head>
+<body>
+    {% if msg %} 
+        <div>{{msg}}</div>
+    {% endif %} 
+    <form action="{% url 'return_book' lib %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="isbn">Book ISBN number: </label>
+            <input type="number" name="isbn" id="isbn">
+            <input type="submit" value="Get Book">
+        </div>
+    </form>
+    {% if b %}
+        <h3>Book ISBN code: {{b.BookIsbnNumber}}</h3>
+        <ul>
+            <li>Book Name: {{b.Book.bookName}}</li>
+            <li>Publisher: {{b.Book.publication}}</li>
+            <li>Edition: {{b.Book.edition}}</li>
+            <li>Authors:  </li>
+            <li>Availability Status: {{b.BookAvalibilityStatus}}</li>
+            {% if b.BookAvalibilityStatus == False %} 
+            <li>Assigned Student: {{b.Student.name}}</li>
+            <li>Date of Issue: {{b.BookIssuedate.date}} </li>
+            <li>Due date: {{b.BookDuedate.date}} </li>
+            {% endif %}
+        </ul>
+        {% if b.BookAvalibilityStatus == False %} 
+            <a href="{% url 'book_returned' lib=lib bId=b.id %}"><button>Book Returned</button></a>
+        {% endif %}
+    {% endif %}
+    <div><a href="{% url 'lib_home' lib %}"><button>Back to Home</button></a></div>
+</body>
+</html>

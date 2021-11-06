@@ -24,7 +24,7 @@
             <a href="{% url 'lib_return' l.username %}"><button>Verify returned Book</button></a>
         </div>
         <div>
-            <a href=""><button>Remove Student</button></a>
+            <a href="{% url 'lib_delete' l.username %}"><button>Remove Student</button></a>
         </div>
         <div>
             <a href="{% url 'index' %}"><button>Log Out</button></a>

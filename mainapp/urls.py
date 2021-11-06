@@ -27,5 +27,10 @@ urlpatterns = [
     path('librarian/<str:lib>/create_book', views.create_book, name="create_book"),
     path('librarian/<str:lib>/<int:bId>/add_authors', views.addauthor_to_book, name="addauthor_to_book"),
     path('librarian/<str:lib>/lib_return', views.lib_return, name="lib_return"),
-    
+    path('librarian/<str:lib>/return_book', views.return_book, name="return_book"),
+    path("librarian/<str:lib>/book_returned/<int:bId>", views.book_returned, name="book_returned"),
+    path('librarian/<str:lib>/lib_delete', views.lib_delete, name="lib_delete"),
+    path('librarian/<str:lib>/get_stu', views.get_stu, name="get_stu"),
+    path('librarian/<str:lib>/delete_stu/<int:stuId>', views.delete_stu, name="delete_stu"),
+
 ]

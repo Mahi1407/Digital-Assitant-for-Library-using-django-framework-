@@ -277,8 +277,74 @@ def lib_return(request, lib):
         'lib':lib
     })
 
-        
+def return_book(request, lib):
+    if request.method == "POST":
+        b = BookDataBase.objects.get(BookIsbnNumber= request.POST["isbn"])
+        return render(request, "mainapp/returnBook.html", {
+        'lib':lib,
+        "b":b
+    })
 
+def book_returned(request, lib, bId):
+    b = BookDataBase.objects.get(id = bId)
+    msg = ""
+    if b.BookReserverdStatus == False:
+        b.BookAvalibilityStatus = True
+        b.Student = None
+        b.BookDuedate = None
+        b.BookIssuedate = None
+        b.save()
+        msg = f"Book with ISBN number '{b.BookIsbnNumber}' got successfully returned"
+
+    return render(request, "mainapp/returnBook.html", {
+        'lib':lib,
+        'msg':msg,
+        'b':b
+    })
+
+def lib_delete(request, lib):
+    sl = student.objects.all()
+    return render(request, "mainapp/delete_stu.html", {
+        "sl":sl,
+        "lib":lib
+    })
+
+def get_stu(request, lib):
+    if request.method == "POST":
+        s = student.objects.get(name=request.POST["student"])
+        sl = student.objects.all()
+        tbl = s.Taken_Books.all()
+        return render(request, "mainapp/delete_stu.html", {
+            'lib':lib,
+            's': s,
+            "tbl": tbl,
+            "sl": sl,
+        })
+
+def delete_stu(request, lib, stuId):
+    stu = student.objects.get(id=stuId)
+    msg = stu.name+" got successfully removed from the database"
+    stbl = stu.Taken_Books.all()
+    srbl = stu.Reserverd_Books.all()
+    for b in stbl:
+        b.BookDuedate = None
+        b.BookIssuedate = None
+        b.BookAvalibilityStatus = True
+        b.save()
+    
+    for r in srbl:
+        r.BookReserverdStatus = False
+    stu.delete()
+    sl = student.objects.all()
+    return render(request,  "mainapp/delete_stu.html", {
+        "sl": sl,
+        "lib": lib, 
+        "msg":msg
+    })
+
+
+        
+ 
 
 
 

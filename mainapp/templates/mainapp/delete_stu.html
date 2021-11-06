@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Student</title>
+    <style>
+        body
+        {
+            counter-reset: Serial;           /* Set the Serial counter to 0 */
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+
+        tr td:first-child:before
+        {
+            counter-increment: Serial;      /* Increment the Serial counter */
+            content:  counter(Serial); /* Display the counter */
+        }
+    </style>
+</head>
+<body>
+    {% if msg %} 
+        <div>{{msg}}</div>
+    {% endif %}
+    <h1>Remove Student Portal</h1>
+    <form autocomplete="off" action="{% url 'get_stu' lib %}" method="post">
+        {% csrf_token %}
+        <input name="student" list="students" placeholder="Enter Student Name" autocomplete="off">
+        <datalist id="students">
+            {% for s in sl %} 
+                <option value="{{s.name}}">
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="search">
+    </form>
+    {% if s %} 
+        <h2>Student Details:</h2>
+        <ul>
+            <li>Student Name: {{s.name}}</li>
+            <li>Student Enrollment Number: {{s.enrollmentNumber}}</li>
+            <li>Student Contact Number: {{s.mobileNumber}}</li>
+            <li>Student Email Id: {{s.emailId}}</li>
+        </ul>
+        <h2>Student BookList:</h2>
+        <table border="1">
+            <tr>
+                <th>SNo.</th>
+                <th>Book ISBN Number</th>
+                <th>Book name</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+            </tr>
+            {% for t in tbl %} 
+            <tr>
+                <td></td>
+                <td>{{t.BookIsbnNumber}}</td>
+                <td>{{t.Book.bookName}}</td>
+                <td>{{t.BookIssuedate}}</td>
+                <td>{{t.BookDuedate}}</td>
+            </tr>
+            {% empty %} 
+            <tr>
+                <td></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'delete_stu' lib=lib stuId=s.id %}"><button>Remove Student</button></a>
+    {% endif %}
+    <div><a href="{% url 'lib_home' lib %}"><button>Back to Home</button></a></div>
+</body>
+</html>
