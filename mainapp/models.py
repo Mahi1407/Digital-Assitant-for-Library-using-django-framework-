@@ -13,6 +13,9 @@ class librarian(models.Model):
     def __str__(self):
         return f"{self.name} Ph.no:{self.mobileNumber}"
 
+    def getusername(self):
+        return self.username
+
 class student(models.Model):
     name = models.CharField(max_length=64, unique=True)
     mobileNumber = models.IntegerField(blank = True, unique=True)
@@ -47,7 +50,7 @@ class Book(models.Model):
     Authors = models.ManyToManyField(Author, blank=True, related_name="Written_Books")
     bookName = models.CharField(max_length=100)
     publication = models.CharField(max_length=100)
-    edition = models.IntegerField()
+    edition = models.IntegerField(blank=True)
     
     def __str__(self):
         return f"{self.bookName}, {self.Authors.all()}"
@@ -55,7 +58,7 @@ class Book(models.Model):
 
 class BookDataBase(models.Model):
     Book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="Copies_of_book")
-    BookIsbnNumber = models.IntegerField()
+    BookIsbnNumber = models.IntegerField(unique=True)
     BookAvalibilityStatus = models.BooleanField(default=True)
     BookReserverdStatus = models.BooleanField(default=False)
     BookIssuedate = models.DateTimeField(null=True)

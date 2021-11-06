@@ -166,8 +166,8 @@ def book2(request, stu, b):
     return HttpResponseRedirect(reverse('stu_search', kwargs={'stu': s.username}))
 
 def stu_books(request, stu):
-    Takenbooklist = student.objects.get(name=stu).Taken_Books.all()
-    Reserverdlist = student.objects.get(name=stu).Reserverd_Books.all()
+    Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    Reserverdlist = student.objects.get(username=stu).Reserverd_Books.all()
     return render(request, "mainapp/stu_books.html",{
         "tbl": Takenbooklist,
         "rbl": Reserverdlist,
@@ -203,6 +203,36 @@ def extend(request, stu, bId):
         "stu":stu,
         "tbl": Takenbooklist,
         "msg": msg
+    })
+
+def add_bookcopy(request, lib):
+    booklist = Book.objects.all()
+    if request.method == "POST":
+        isbn = request.POST["isbn"]
+        b = Book.objects.get(bookName=request.POST["book"])
+        book = BookDataBase(BookIsbnNumber=isbn , Book=b)
+        book.save()
+        msg = b.bookName+" with ISBN code "+isbn+" got successfully added to the DataBase"
+        return render(request, "mainapp/add_bookcopy.html", {
+            "booklist": booklist,
+            "lib":lib,
+            "msg": msg
+        })
+    return render(request, "mainapp/add_bookcopy.html", {
+        "booklist": booklist,
+        "lib":lib
+    })
+
+def add_author(request, lib):
+    return render(request, "mainapp/add_author.html", {
+        "lib":lib
+    })
+
+def add_newbook(request, lib):
+    al = Author.objects.all()
+    return render(request, "mainapp/add_newbook.html", {
+        "lib": lib,
+        "al": al
     })
 
 

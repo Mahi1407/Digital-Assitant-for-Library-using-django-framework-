@@ -14,11 +14,15 @@ urlpatterns = [
     path('librarian/<str:lib>/add/', views.add, name="add"),
     path('librarian/<str:lib>/requestList', views.requestList, name="requestList"),
     path('librarain/<str:lib>/requestList/<int:stuId>', views.add2, name="add2"), 
+    path('librarian/<str:lib>/add_book/', views.add_bookcopy, name="add_bookcopy"),
+    path('librarian/<str:lib>/add_author/', views.add_author, name ="add_author"),
+    path('librarian/<str:lib>/add_newbook/', views.add_newbook, name="add_newbook"),
     path('student/<str:stu>/search', views.stu_search, name="stu_search"),
     path('student/<str:stu>/book', views.book, name="book"),
     path('student/<str:stu>/book/<int:b>', views.book2, name="book2"),
     path('student/<str:stu>/BookList', views.stu_books, name = "stu_books"),
     path('student/<str:stu>/TotalFine', views.stu_fine, name="stu_fine"),
     path('student/<str:stu>/extension', views.extension, name="extension"),
-    path('student/<str:stu>/extend/<int:bId>', views.extend, name="extend")
+    path('student/<str:stu>/extend/<int:bId>', views.extend, name="extend"),
+    
 ]

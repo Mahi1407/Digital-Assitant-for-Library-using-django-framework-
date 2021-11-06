@@ -6,13 +6,28 @@
     <body>
         <h1>Welcome, {{l.name}}</h1>
         <div>
-            <a href="{% url 'add' l.username %}">Add Student</a>
+            <a href=""><button>View Profile</button></a>
         </div>
         <div>
-            <a href="{% url 'requestList' l.username %}">View Register Requests</a>
+            <a href="{% url 'add' l.username %}"><button>Add Student</button></a>
         </div>
         <div>
-            <a href="{% url 'index' %}">Log Out</a>
+            <a href="{% url 'requestList' l.username %}"><button>View Register Requests</button></a>
+        </div>
+        <div>
+            <a href=""><button>Display All Books</button></a>
+        </div>
+        <div>
+            <a href="{% url 'add_bookcopy' l.username %}"><button>Add a new Book copy</button></a>
+        </div>
+        <div>
+            <a href=""><button>Verify returned Book</button></a>
+        </div>
+        <div>
+            <a href=""><button>Remove Student</button></a>
+        </div>
+        <div>
+            <a href="{% url 'index' %}"><button>Log Out</button></a>
         </div>
     </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if msg %} 
+    <div>{{msg}}</div>
+    {% endif %}
+    <h1>Add a new Book copy to BookDataBase</h1>
+    <form method="post" action="{% url 'add_bookcopy' lib %}">
+        {% csrf_token %}
+        <input name="book" list="books" placeholder="Enter the Book name">
+        <datalist id="books">
+            {% for b in booklist %}
+                <option value="{{b.bookName}}">
+            {% endfor %}
+        </datalist>
+        <div>
+            Enter the ISBN Number: <input type="number" name="isbn" placeholder="ISBN number" >
+        </div>
+        <input type="submit" value="Search">
+    </form>
+    <div><a href="{% url 'add_newbook' lib %}"><button>Create New Book Object</button></a></div>
+    <div><a href="{% url 'add_author' lib %}"><button>Create new Author Object</button></a></div>
+    <div><a href="{% url 'lib_home' lib %}"><button>Back to Home</button></a></div>
+</body>
+</html>
