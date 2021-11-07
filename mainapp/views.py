@@ -380,6 +380,18 @@ def lib_return(request, lib):
 
 def return_book(request, lib):
     if request.method == "POST":
+        isbn = int(request.POST["isbn"])
+        bkl = BookDataBase.objects.all()
+        is_there = False
+        for b in bkl:
+            if b.BookIsbnNumber==isbn:
+                is_there = True
+        if is_there==False:
+            msg = f"Book with ISBN code '{isbn}' doesn't exist"
+            return render(request, "mainapp/returnBook.html", {
+                "lib":lib, 
+                "msg": msg
+            })
         b = BookDataBase.objects.get(BookIsbnNumber= request.POST["isbn"])
         return render(request, "mainapp/returnBook.html", {
         'lib':lib,
@@ -412,15 +424,28 @@ def lib_delete(request, lib):
 
 def get_stu(request, lib):
     if request.method == "POST":
-        s = student.objects.get(name=request.POST["student"])
+        stu = request.POST["student"]
         sl = student.objects.all()
-        tbl = s.Taken_Books.all()
+        is_there = False
+        for st in sl:
+            if st.name==stu:
+                is_there = True
+        if is_there:
+            s = student.objects.get(name=request.POST["student"])
+            tbl = s.Taken_Books.all()
+            return render(request, "mainapp/delete_stu.html", {
+                'lib':lib,
+                's': s,
+                "tbl": tbl,
+                "sl": sl,
+            })
+        msg = f"Student with name '{stu}' doesn't exist"
         return render(request, "mainapp/delete_stu.html", {
-            'lib':lib,
-            's': s,
-            "tbl": tbl,
-            "sl": sl,
-        })
+        "sl":sl,
+        "lib":lib,
+        "msg":msg
+    })
+        
 
 def delete_stu(request, lib, stuId):
     stu = student.objects.get(id=stuId)
