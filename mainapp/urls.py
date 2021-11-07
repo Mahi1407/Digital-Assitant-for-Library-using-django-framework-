@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path('admin/', views.Adminstration_login, name = "Adminstration_login"),
     path('lib_login/', views.lib_login, name = "lib_login"),
     path('stu_login/', views.stu_login, name = "stu_login"),
     path('librarian/', views.lib, name = "lib"),
@@ -35,5 +36,11 @@ urlpatterns = [
     path('librarian/<str:lib>/delete_req/<int:stuId>', views.delete_req, name="delete_req"),
     path('librarian/<str:lib>/display_books', views.display_books, name="display_books"),
     path('librarian/<str:lib>/delete_bookcpy/<int:bId>', views.delete_bookcpy, name="delete_bookcpy"),
+    path('librarian/<str:lib>/profile', views.libprofile, name="libprofile"),
+    path('librarian/<str:lib>/updateprofile', views.libupdateprofile, name="libupdateprofile"),
+    path('librarian/<str:lib>/updateprofile/changepassword', views.libchangepassword, name="libchangepassword"),
+    path('student/<str:stu>/profile', views.stuprofile, name="stuprofile"),
+    path('student/<str:stu>/updateprofile', views.stuupdateprofile, name="stuupdateprofile"),
+    path('student/<str:stu>/updateprofile/changepassword', views.stuchangepassword, name="stuchangepassword"),
 
 ]

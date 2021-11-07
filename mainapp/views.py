@@ -13,6 +13,9 @@ def stu_login(request):
 def lib_login(request):
     return render(request, "mainapp/liblogin.html")
 
+def Adminstration_login(request):
+    return HttpResponseRedirect(reverse("admin"))
+
 def lib(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -507,6 +510,103 @@ def delete_bookcpy(request, lib, bId):
         "bl": booklist,
         "msg": msg
     })
+
+def libprofile(request, lib):
+    libSet = librarian.objects.all()
+    l = libSet.get(username = lib)
+    return render(request, "mainapp/libprofile.html",{
+        "l": l
+    })
+def libupdateprofile(request,lib):
+    l = librarian.objects.get(username=lib)
+    if request.method == "POST":
+        l.name = request.POST["name"]
+        l.mobileNumber = request.POST["phoneNo"]
+        l.emailId = request.POST["email"]
+        l.username = request.POST["username"]
+        l.save()
+        msg = "Sucessfully updated profile"
+        return render(request, "mainapp/libprofile.html",{
+            "l": l, 
+            "msg":msg
+        })
+    else:
+        l = librarian.objects.get(username=lib)
+        return render(request, "mainapp/libupdateprofile.html",{
+            "l": l, 
+        })
+def libchangepassword(request,lib):
+    l = librarian.objects.get(username=lib)
+    if request.method == "POST":
+        if l.password ==  request.POST["oldpassword"]:
+            l.password = request.POST["newpassword"]
+            l.save()
+            msg = "Sucessfully changedpassword"
+            return render(request, "mainapp/libupdateprofile.html",{
+                "l": l, 
+                "msg":msg
+            })
+        else:
+            l = librarian.objects.get(username=lib)
+            msg= "incorrect old password"
+            return render(request, "mainapp/libchangepassword.html",{
+                "l": l, 
+                "msg":msg
+            })
+    else:
+        l = librarian.objects.get(username=lib)
+        return render(request, "mainapp/libchangepassword.html",{
+            "l": l, 
+        })
+
+def stuprofile(request, stu):
+    stuSet = student.objects.all()
+    s = stuSet.get(username = stu)
+    return render(request, "mainapp/stuprofile.html",{
+        "s": s
+    })
+def stuupdateprofile(request,stu):
+    s = student.objects.get(username=stu)
+    if request.method == "POST":
+        s.name = request.POST["name"]
+        s.mobileNumber = request.POST["phoneNo"]
+        s.emailId = request.POST["email"]
+        s.username = request.POST["username"]
+        s.save()
+        msg = "Sucessfully updated profile"
+        return render(request, "mainapp/stuprofile.html",{
+            "s": s, 
+            "msg":msg
+        })
+    else:
+        s = student.objects.get(username=stu)
+        return render(request, "mainapp/stuupdateprofile.html",{
+            "s": s, 
+        })
+def stuchangepassword(request,stu):
+    s = student.objects.get(username=stu)
+    if request.method == "POST":
+        if s.password ==  request.POST["oldpassword"]:
+            s.password = request.POST["newpassword"]
+            s.save()
+            msg = "Sucessfully changedpassword"
+            return render(request, "mainapp/stuupdateprofile.html",{
+                "s": s, 
+                "msg":msg
+            })
+        else:
+            s = student.objects.get(username=stu)
+            msg= "enter correct password"
+            return render(request, "mainapp/stuchangepassword.html",{
+                "s": s, 
+                "msg":msg
+            })
+    else:
+        s = student.objects.get(username=stu)
+        return render(request, "mainapp/stuchangepassword.html",{
+            "s": s, 
+        })
+
 
 
         

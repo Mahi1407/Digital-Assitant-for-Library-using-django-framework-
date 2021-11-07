@@ -6,7 +6,7 @@
     <body>
         <h1>Welcome, {{l.name}}</h1>
         <div>
-            <a href=""><button>View Profile</button></a>
+            <a href="{% url 'libprofile' l.username %}"><button>View Profile</button></a>
         </div>
         <div>
             <a href="{% url 'add' l.username %}"><button>Add Student</button></a>

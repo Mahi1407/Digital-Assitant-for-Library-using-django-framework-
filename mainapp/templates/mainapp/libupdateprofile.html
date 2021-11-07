@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{l.name}} updateprofile</title>
+    </head>
+    <body>
+    {% if msg %} 
+    <div>
+        {{msg}}
+    </div>
+    {% endif %}
+        <form method="post" action="{% url 'libupdateprofile' lib=l.username  %}">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter Name" value={{l.name}}>
+            <input type="text" name="email" placeholder="Enter Email Address" value={{l.emailId}} >
+            <input type="number" name="phoneNo" placeholder="Enter Phone No" value={{l.mobileNumber}} >
+            <input type="text" name="username" placeholder ="Enter Username" value={{l.username}} >
+            <input type="submit" value="update">
+        </form>
+        <div>
+            <a href="{% url 'libprofile' l.username %}">Back to profile</a>
+        </div>
+        <div>
+            <a href="{% url 'libchangepassword' l.username %}">Changepassword</a>
+        </div>
+    </body>
+</html>

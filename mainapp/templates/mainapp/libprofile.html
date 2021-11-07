@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{l.name}} Profile</title>
+</head>
+<body>
+    {% if msg %} 
+    <div>
+        {{msg}}
+    </div>
+    {% endif %}
+    <h1>{{l.name}} Profile</h1>
+    <div>
+        Name : {{l.name}}
+    </div>
+    <div>
+        MobileNumber : {{l.mobileNumber}}
+    </div>
+    <div>
+        username : {{l.username}}
+    </div>
+    <div>
+        Emailid : {{l.emailId}}
+    </div>
+    <div>
+        <a href="{% url 'libupdateprofile' l.username %}"><button>update profile</button></a>
+    </div>
+    <div>
+        <a href="{% url 'lib_home' l.username %}"><button>Back to home</button></a>
+    </div>
+</body>
+</html>

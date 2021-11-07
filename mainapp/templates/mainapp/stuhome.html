@@ -6,7 +6,7 @@
     <body>
         <h1>Welcome, {{s.name}}</h1>
         <div>
-            <a href=""><button>View Profile</button></a>
+            <a href="{% url 'stuprofile' s.username %}"><button>View Profile</button></a>
         </div>
         <div>
             <a href="{% url 'stu_books' s.username %}"><button>View Taken Books</button></a>
