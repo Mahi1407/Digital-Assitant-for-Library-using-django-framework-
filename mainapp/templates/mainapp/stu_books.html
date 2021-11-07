@@ -25,6 +25,9 @@
 </head>
 <body>
     <h1>List of Taken Books:</h1>
+    {% if ntb == 0 %}
+    <ul><li>No Taken Books to display</li></ul>
+    {% else %}
     <table border="1">
         <tr>
             <th>SNo.</th>
@@ -43,6 +46,29 @@
         </tr>
         {% endfor %}
     </table>
+    {% endif %}
+    <h1>List of Reserved Books:</h1>
+    {% if nrb == 0 %}
+    <ul><li>No Reserved Books to display</li></ul>
+    {% else %}
+    <table border="1">
+        <tr>
+            <th>SNo.</th>
+            <th>Book ISBN Number</th>
+            <th>Book name</th>
+            <th>Due Date of Reserved Book</th>
+        </tr>
+        {% for t in tbl %} 
+        <tr>
+            <td></td>
+            <td>{{t.BookIsbnNumber}}</td>
+            <td>{{t.Book.bookName}}</td>
+            <td>{{t.BookDuedate}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    
     <div>
         <a href="{% url 'stu_home' stu %}"><button>Back to Home</button></a>
     </div>

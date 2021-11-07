@@ -65,6 +65,11 @@ def stu(request):
                 is_there = True
         if is_there:
             return HttpResponseRedirect(reverse('stu_home', kwargs={'stu': un}))
+        else:
+            msg = 'Invalid Credentials'
+            return render(request, "mainapp/stulogin.html",{
+                'msg': msg
+            })
 
 def stu_home(request, stu):
     s = student.objects.get(username = stu)
@@ -166,21 +171,43 @@ def book2(request, stu, b):
     return HttpResponseRedirect(reverse('stu_search', kwargs={'stu': s.username}))
 
 def stu_books(request, stu):
+    s = student.objects.get(username=stu)
     Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    ntb = s.Taken_Books.count()
     Reserverdlist = student.objects.get(username=stu).Reserverd_Books.all()
+    nrb = s.Reserverd_Books.count()
     return render(request, "mainapp/stu_books.html",{
         "tbl": Takenbooklist,
         "rbl": Reserverdlist,
-        "stu":stu
+        "stu":stu,
+        "ntb": ntb,
+        "nrb": nrb
     })
+
+def Overduedays(a, b, c):
+    dt = datetime.date(a, b, c)
+    now = datetime.datetime.now()
+    nowdt = now.date()
+    if dt>=nowdt:
+        return 0
+    else:
+        return (nowdt-dt).days
+
+def fine(a, b, c):
+    return Overduedays(a, b, c)*2
 
 def stu_fine(request, stu):
     Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    total_fine= 0
+    for b in Takenbooklist:
+        f = fine(b.BookDuedate.year, b.BookDuedate.month,  b.BookDuedate.day)
+        total_fine+=f
     now = datetime.datetime.now()
     return render(request, "mainapp/stu_fine.html", {
         "tbl": Takenbooklist,
         "stu":stu,
-        "now": now
+        "now": now, 
+        'total_fine': total_fine
     })
 
 def extension(request, stu):
@@ -194,11 +221,12 @@ def extend(request, stu, bId):
     book = BookDataBase.objects.get(id=bId)
     Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
     if book.BookReserverdStatus:
+        msg = "Requested Book is reserved by another student, Can't Extend the Due date"
         return   
     else:
         book.BookDuedate = book.BookDuedate + datetime.timedelta(days=10)
         book.save()
-        msg = "Sucessfully Extended"
+        msg = book.Book.name+" got Sucessfully Extended"
         return render(request, "mainapp/extension.html", {
         "stu":stu,
         "tbl": Takenbooklist,

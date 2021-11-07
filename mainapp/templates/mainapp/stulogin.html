@@ -4,6 +4,10 @@
         <title>Student Login</title>
     </head>
     <body>
+        {% if msg %}
+            <div>{{msg}}</div>
+        {% endif %}
+        <h1>Student Loign Site</h1>
         <form method="post" action="{% url 'stu' %}">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Enter Student Username">
@@ -13,5 +17,6 @@
         <div>
             New Student? <a href="{% url 'register' %}">Register</a>
         </div>
+        <a href="{% url 'index'  %}"><button>Back to Index Page</button></a>
     </body>
 </html>
