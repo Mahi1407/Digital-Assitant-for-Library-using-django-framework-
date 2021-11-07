@@ -1,0 +1,83 @@
+input{
+    width: 50%;
+    padding: 8px 20px;
+    margin: 7px 0px 23px 30px;
+    box-sizing: border-box;
+    border-radius: 5px ;
+    position: relative;
+    top: 50px;
+    border: 3.5px outset rgba(104, 84, 84, 0.925);
+    font-size: 15px;
+    text-align: left;
+}
+label{
+    font-size: 22px;
+    padding: 50px 0px 10px 30px;
+    position: relative;
+    top: 50px;
+    text-align: center;
+}
+input[type=submit]{
+    position: relative;
+    left: 75%;
+    width: 20%;
+    background-color:  #4caf50;
+    
+}
+input[type=reset]{
+    position: relative;
+    left: 30%;
+    width: 20%;
+    background-color:  #4caf50;
+}
+h1{
+    background-color: #3cbc8d;
+    text-align: center;
+    border: 2px double;
+    padding: 5px 30px;
+    border-radius: 10px;
+    position: relative;
+    top: 30px;
+    left:30%;
+    font-family: Georgia, serif;
+    font-size: 40px;
+    display: inline;  
+    
+}
+#f{
+    text-align: right;
+    display: inline;
+   
+}
+a:link{
+    text-decoration:none ;
+    border: 2px ridge black;
+    position: relative;
+    top: 30px;
+    left: 50%;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: wheat;
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+   
+}
+a:hover{
+    background: rgba(0, 255, 255, 0.68) 
+}
+.sisir:hover{
+    background: rgba(0, 255, 255, 0.68) 
+}
+.sisir{
+    font-size: 20px;
+    border:3.5px outset rgba(104, 84, 84, 0.925);
+    border-radius: 5px ;
+    margin-bottom: 30px;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background: rgb(211, 211, 4);
+    height: 100vh;
+  }

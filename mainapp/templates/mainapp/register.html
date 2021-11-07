@@ -1,22 +1,54 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Student Register</title>
+        <link rel="stylesheet" href="{% static 'index/register.css' %}">
+   
     </head>
     <body>
         <h1>Student Registration</h1>
+        <div id="f">
+            <a href="{% url 'stu_login' %}"> Login Page</a>
+        </div> 
         <form action="{% url 'register' %}" method="post">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Enter Name">
-            <input type="number" name="enrollNo" placeholder="Enter Enrollment No">
-            <input type="text" name="email" placeholder="Enter Email Address">
-            <input type="number" name="phoneNo" placeholder="Enter Phone No">
-            <input type="text" name="username" placeholder ="Enter Username">
-            <input type="password" name="password" placeholder="Enter Password">
-            <input type="password" name="password2" placeholder="Re-enter Password">
-            <input type="submit" value="Send Request">
+            <label for="name"> Enter Name</label>
+            <br>
+            <input  type="text" name="name" placeholder="Enter Name..." autofocus required>
+            <!--<p> Select your Gender </p>
+            <label for="gender-male"> Male </label>
+            <input type="radio" name="gender-male" value = "choice-1">
+            <label for="geneger-female"> Female </label>
+            <input type="radio" name="gender-female" value = "choice-2">-->
+            <br>
+            <label for="enrollno"> Enrollment no provided by institution </label>
+            <br>
+            <input type="number" name="enrollNo" placeholder="Enter Enrollment No..." required>
+            <br>
+            <label for="email"> Enter your valid email Id</label>
+            <br>
+            <input type="email" name="email" placeholder="xyz@email..." required>
+            <br>
+            <label for="phoneno"> Enter your phone no </label>
+            <br>
+            <input type="number" min="1111111111" max ="9999999999" name="phoneNo..." placeholder="Phone No" size = "10" required>
+            <br><label for="username"> Username </label>
+            <br>
+            <input type="text" name="username" placeholder ="Enter Username..." required>
+            <br>
+            <label for="password"> Password </label>
+            <br>
+            <input type="password" name="password" placeholder="Enter Password..." required>
+            <br>
+            <label for="password2"> Re-enter Password</label>
+            <br>
+            <input type="password" name="password2" placeholder="Re-enter Password..." required>
+            <br>
+            <input class="sisir" type="submit" value="Send Request">
+            <input class="sisir" type="reset">
         </form>
-        <a href="{% url 'stu_login' %}">Back to Student Login Page</a>
-
+             
     </body>
 </html>
