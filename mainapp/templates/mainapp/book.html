@@ -7,6 +7,9 @@
     <title>Book</title>
 </head>
 <body>
+    {% if msg %}
+        <div>{{msg}}</div>
+    {% endif %}
     <div>
         <form method="post" action="{% url 'book' stu %}">
             {% csrf_token %}

@@ -24,6 +24,11 @@ def lib(request):
                 is_there = True
             if is_there:
                 return HttpResponseRedirect(reverse('lib_home', kwargs={'lib':username}))
+            else:
+                msg = 'Invalid Credentials'
+                return render(request, "mainapp/liblogin.html",{
+                    'msg': msg
+                })
 
 def lib_home(request, lib):
     libSet = librarian.objects.all()
@@ -44,8 +49,18 @@ def add(request, lib):
         l = librarian.objects.get(username = lib)
         if password == p2:
             s = student(name=name, mobileNumber=phoneno, emailId=email, enrollmentNumber=enrollNo, username=username, password=password)
+            msg= s.name+" got successfully added to the portal"
             s.save()
-            return HttpResponseRedirect(reverse('add', kwargs={'lib': l.username}))
+            return render(request, "mainapp/add.html", {
+                "l":l, 
+                "msg": msg
+            })
+        else:
+            msg = "Password doesn't match with Re-enter Password"
+            return render(request, "mainapp/add.html", {
+                "l":l, 
+                "msg": msg
+            })
     else:
         l = librarian.objects.get(username = lib)
         return render(request, "mainapp/add.html", {
@@ -110,10 +125,17 @@ def add2(request, lib, stuId):
         username = request.POST["username"]
         password = request.POST["password"]
         s = student(name=name, mobileNumber=phoneno, emailId=email, enrollmentNumber=enrollNo, username=username, password=password)
+        msg = f"{s.name}({s.enrollmentNumber}) got successfully added to the portal"
         s.save()
         d = NewStudent.objects.get(id= stuId)
         d.delete()
-        return HttpResponseRedirect(reverse('requestList', kwargs={'lib': lib}))
+        l = librarian.objects.get(username= lib)
+        newStuSet = NewStudent.objects.all()
+        return render(request, 'mainapp/NewStuList.html', {
+            "list": newStuSet,
+            "l": l,
+            "msg": msg
+        })
     else:
         l = librarian.objects.get(username=lib)
         s = NewStudent.objects.get(id = stuId)
@@ -156,6 +178,36 @@ def book(request, stu):
 def book2(request, stu, b):
     s = student.objects.get(username = stu)
     bk = Book.objects.get(id = b)
+    tbl = s.Taken_Books.all()
+    is_there = False
+    for t in tbl:
+        if bk == t.Book:
+            is_there = True
+    if is_there:
+        authors = bk.Authors.all()
+        c = bk.Copies_of_book.count()
+        bcopies = bk.Copies_of_book.all()
+        a=0
+        r = 0
+        booklist = Book.objects.all()
+        msg = "Selected Book is already present in your Taken Book list"
+        for bc in bcopies:
+            if bc.BookAvalibilityStatus:
+                a = a+1
+            if bc.BookReserverdStatus:
+                r = r+1
+        return render(request, "mainapp/book.html",{
+            "b":bk,
+            "stu": stu,
+            "c": c,
+            "authors": authors,
+            "a": a, 
+            "r": r,
+            "booklist": booklist,
+            "msg": msg
+        })
+        
+
     bcopies = bk.Copies_of_book.all()
     bId = 0
     for book in bcopies:
@@ -220,18 +272,39 @@ def extension(request, stu):
 def extend(request, stu, bId):
     book = BookDataBase.objects.get(id=bId)
     Takenbooklist = student.objects.get(username=stu).Taken_Books.all()
+    now = datetime.datetime.now()   
+    nowdt = now.date()
+    if nowdt>book.BookDuedate.date():
+        msg = "The Duedate for the book has been crossed: Can't Extend the Due date"
+        return render(request, "mainapp/extension.html", {
+            "stu":stu,
+            "tbl": Takenbooklist,
+            "msg": msg
+        } )
     if book.BookReserverdStatus:
-        msg = "Requested Book is reserved by another student, Can't Extend the Due date"
-        return   
+        msg = "Requested Book is reserved by another student: Can't Extend the Due date"
+        return render(request, "mainapp/extension.html", {
+            "stu":stu,
+            "tbl": Takenbooklist,
+            "msg": msg
+        } )
     else:
         book.BookDuedate = book.BookDuedate + datetime.timedelta(days=10)
-        book.save()
-        msg = book.Book.name+" got Sucessfully Extended"
-        return render(request, "mainapp/extension.html", {
-        "stu":stu,
-        "tbl": Takenbooklist,
-        "msg": msg
-    })
+        if (book.BookDuedate.date()-book.BookIssuedate.date()).days>40:
+            msg ="Can't Extend the Due date more than once"
+            return render(request, "mainapp/extension.html", {
+                "stu":stu,
+                "tbl": Takenbooklist,
+                "msg": msg
+            } )
+        else:
+            msg = book.Book.bookName+" got Sucessfully Extended"
+            book.save()
+            return render(request, "mainapp/extension.html", {
+                "stu":stu,
+                "tbl": Takenbooklist,
+                "msg": msg
+            })
 
 def add_bookcopy(request, lib):
     booklist = Book.objects.all()
@@ -368,6 +441,46 @@ def delete_stu(request, lib, stuId):
         "sl": sl,
         "lib": lib, 
         "msg":msg
+    })
+
+def delete_req(request, lib, stuId):
+    l = librarian.objects.get(username= lib)
+    newStuSet = NewStudent.objects.all()
+    d = NewStudent.objects.get(id= stuId)
+    msg = "Request from "+d.name+" got successfully deleted"
+    d.delete()
+    return render(request, 'mainapp/NewStuList.html', {
+        "list": newStuSet,
+        "l": l,
+        "msg": msg
+    })
+
+def display_books(request, lib):
+    booklist = BookDataBase.objects.all()
+    return render(request, "mainapp/display_books.html", {
+        "lib":lib, 
+        "bl": booklist
+    })
+
+def delete_bookcpy(request, lib, bId):
+    bkl = BookDataBase.objects.all()
+    is_there = False
+    for b in bkl:
+        if b.id == bId:
+            is_there = True
+    if is_there == False:
+        return render(request, "mainapp/display_books.html", {
+        "lib":lib, 
+        "bl": bkl,
+    })
+    b = BookDataBase.objects.get(id = bId)
+    msg = f"Book {b.Book.bookName} with Isbn code '{b.BookIsbnNumber}' got successfully removed from the database"
+    b.delete()
+    booklist = BookDataBase.objects.all()
+    return render(request, "mainapp/display_books.html", {
+        "lib":lib, 
+        "bl": booklist,
+        "msg": msg
     })
 
 

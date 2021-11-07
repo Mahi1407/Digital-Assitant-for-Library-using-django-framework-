@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Books</title>
+</head>
+<body>
+    {% if msg %} 
+    <div>
+        {{msg}}
+    </div>
+    {% endif %}
+    <div><h1>List of All Books of Library</h1></div>
+    <table border="1">
+        <tr>
+            <th>SNo.</th>
+            <th>Book ISBN Number</th>
+            <th>Book name</th>
+            <th>Availability Status</th>
+            <th>Option for Deletion</th>
+        </tr>
+        {% for t in bl %} 
+        <tr>
+            <td></td>
+            <td>{{t.BookIsbnNumber}}</td>
+            <td>{{t.Book.bookName}}</td>
+            <td>{{t.BookAvalibilityStatus}}</td>
+            {% if t.BookAvalibilityStatus %}
+            <td><a href="{% url 'delete_bookcpy' lib=lib bId=t.id %}"><button>Delete Book</button></a></td>
+            {% else %} 
+            <td></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        <a href="{% url 'lib_home' lib %}"><button>Back to Home</button></a>
+    </div>
+</body>
+</html>

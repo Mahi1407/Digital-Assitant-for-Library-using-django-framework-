@@ -4,6 +4,10 @@
         <title>Add Students</title>
     </head>
     <body>
+        {% if msg %}
+            <div>{{msg}}</div>
+        {% endif %}
+        <h1>Add a New Student to the Portal</h1>
         <form action="{% url 'add' l.username %}" method = "post">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Enter Name">
@@ -13,7 +17,7 @@
             <input type="text" name="username" placeholder ="Enter Username">
             <input type="password" name="password" placeholder="Enter Password">
             <input type="password" name="password2" placeholder="Re-enter Password">
-            <input type="submit" value="Add Student">
+            <input type="submit" value="Add">
         </form>
         <div>
             <a href="{% url 'lib_home' l.username %}">Home</a>

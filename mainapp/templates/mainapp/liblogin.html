@@ -4,11 +4,16 @@
         <title>Librarian Login</title>
     </head>
     <body>  
+        {% if msg %}
+            <div>{{msg}}</div>
+        {% endif %}
+        <h1>Librarian Loign Site</h1>
         <form method="post" action="{% url 'lib' %}">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Enter Username" >
             <input type="password" name="password" placeholder="Enter Password">
             <input type="submit" value="Login">
         </form>
+        <a href="{% url 'index'  %}"><button>Back to Index Page</button></a>
     </body>
 </html>

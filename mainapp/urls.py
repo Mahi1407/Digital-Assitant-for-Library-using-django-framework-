@@ -32,5 +32,8 @@ urlpatterns = [
     path('librarian/<str:lib>/lib_delete', views.lib_delete, name="lib_delete"),
     path('librarian/<str:lib>/get_stu', views.get_stu, name="get_stu"),
     path('librarian/<str:lib>/delete_stu/<int:stuId>', views.delete_stu, name="delete_stu"),
+    path('librarian/<str:lib>/delete_req/<int:stuId>', views.delete_req, name="delete_req"),
+    path('librarian/<str:lib>/display_books', views.display_books, name="display_books"),
+    path('librarian/<str:lib>/delete_bookcpy/<int:bId>', views.delete_bookcpy, name="delete_bookcpy"),
 
 ]

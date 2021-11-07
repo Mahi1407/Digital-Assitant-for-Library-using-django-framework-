@@ -15,7 +15,7 @@
             <a href="{% url 'requestList' l.username %}"><button>View Register Requests</button></a>
         </div>
         <div>
-            <a href=""><button>Display All Books</button></a>
+            <a href="{% url 'display_books' l.username %}"><button>Display All Books</button></a>
         </div>
         <div>
             <a href="{% url 'add_bookcopy' l.username %}"><button>Add a new Book copy</button></a>

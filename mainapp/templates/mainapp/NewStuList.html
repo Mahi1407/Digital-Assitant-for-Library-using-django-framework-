@@ -4,6 +4,9 @@
         <title>New Student List</title>
     </head>
     <body>
+        {% if msg %} 
+            <div>{{msg}}</div>
+        {% endif %}
         <h1>List of Register Requests</h1>
         <ul>
             {% for s in list %}
